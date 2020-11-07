@@ -33,4 +33,9 @@ public class FileStorageService {
         return filemapper.getAllFiles(userid);
     }
 
+    // Get File Universe
+    public List<File> getFileUniverse() {
+        return filemapper.getFileUniverse();
+    }
+
 }

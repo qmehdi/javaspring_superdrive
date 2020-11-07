@@ -49,7 +49,7 @@ public class FileUploadController {
         // Insert the user given file into the DB
         storageService.insertFileIntoDB(userSubmittedFile);
 
-        return "home";
+        return "redirect:/home";
     }
 
 }

@@ -44,4 +44,11 @@ public interface FileMapper {
     @Insert("INSERT INTO FILES (fileId, filename, contenttype, filesize, userid, filedata) VALUES(#{fileId}, #{filename}, #{contenttype}, #{filesize}, #{userid}, #{filedata})")
     @Options(useGeneratedKeys = true, keyProperty = "fileId")
     int insertFile(File file);
+
+    /**
+     * Get all files in the Universe
+     * @return
+     */
+    @Select("SELECT * FROM FILES ")
+    List<File> getFileUniverse();
 }
