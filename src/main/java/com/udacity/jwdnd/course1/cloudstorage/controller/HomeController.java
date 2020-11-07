@@ -21,12 +21,16 @@ public class HomeController {
         this.fileStorageService = fileStorageService;
     }
 
-    @RequestMapping(value="/home", method={ RequestMethod.GET })
+    @RequestMapping(value="/home", method={ RequestMethod.GET, RequestMethod.POST })
     public String homeView(HttpServletRequest request, Model model) {
 
         authentication = SecurityContextHolder.getContext().getAuthentication();
 
         model.addAttribute("list_of_stored_files", fileStorageService.getFileUniverse());
+
+        // This is to enable the "File Uploaded Successfully" message to show up on home.html
+        request.setAttribute("fileUploadSuccess", request.getAttribute("fileUploadSuccess"));
+
         return "home";
     }
 }

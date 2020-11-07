@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -30,7 +31,7 @@ public class FileUploadController {
 
     @PostMapping("/file-upload")
     public String handleFileUpload(@RequestParam("fileUpload")
-                                   MultipartFile fileUpload, Model model) throws IOException {
+                                   MultipartFile fileUpload, Model model, HttpServletRequest request) throws IOException {
 
         InputStream fis = fileUpload.getInputStream();
 
@@ -49,7 +50,9 @@ public class FileUploadController {
         // Insert the user given file into the DB
         storageService.insertFileIntoDB(userSubmittedFile);
 
-        return "redirect:/home";
+        request.setAttribute("fileUploadSuccess", true);
+
+        return "forward:/home";
     }
 
 }
