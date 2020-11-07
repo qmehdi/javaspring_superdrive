@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
 
 @Controller
 public class FileUploadController {
@@ -35,6 +36,9 @@ public class FileUploadController {
 
         InputStream fis = fileUpload.getInputStream();
 
+        // Get current time
+        String uploadedtime = Instant.now().toString();
+
         // Get authentication object from Spring Security
         authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -45,7 +49,7 @@ public class FileUploadController {
         User user = userservice.getUser(loggedinUser);
 
         // File model
-        File userSubmittedFile = new File(fileUpload.getOriginalFilename(), fileUpload.getContentType(), Long.toString(fileUpload.getSize()), user.getUserId().toString(), fis.readAllBytes());
+        File userSubmittedFile = new File(fileUpload.getOriginalFilename(), fileUpload.getContentType(), Long.toString(fileUpload.getSize()), user.getUserId().toString(), fis.readAllBytes(), uploadedtime.toString());
 
         // Insert the user given file into the DB
         storageService.insertFileIntoDB(userSubmittedFile);

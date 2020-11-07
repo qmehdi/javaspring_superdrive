@@ -1,5 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
+import java.sql.Timestamp;
+
 public class File {
     private Integer fileId;
     private String filename;
@@ -7,13 +9,15 @@ public class File {
     private String filesize;
     private String userid;
     private byte[] filedata;
+    private String uploadedtime;
 
-    public File(String filename, String contenttype, String filesize, String userid, byte[] filedata) {
+    public File(String filename, String contenttype, String filesize, String userid, byte[] filedata, String uploadedtime) {
         this.filename = filename;
         this.contenttype = contenttype;
         this.filesize = filesize;
         this.userid = userid;
         this.filedata = filedata;
+        this.uploadedtime = uploadedtime;
     }
 
     public Integer getFileId() {
@@ -63,4 +67,8 @@ public class File {
     public void setFiledata(byte[] filedata) {
         this.filedata = filedata;
     }
+
+    public String getUploadedtime() { return uploadedtime; }
+
+    public void setUploadedtime(String uploadedtime) { this.uploadedtime = uploadedtime; }
 }
