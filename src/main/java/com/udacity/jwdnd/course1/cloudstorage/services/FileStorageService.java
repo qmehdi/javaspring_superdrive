@@ -19,20 +19,19 @@ public class FileStorageService {
     // Insert file into db
     public String insertFileIntoDB(File file) {
 
-        // fileUploadSuccess = null;
-        // fileUploadFailure = null;
+        String fileUploadSuccess = null;
 
-        // Get userid from File object
+        // Check if the file already exists in the db
+        File singleFile = getSingleFile(file.getFilename(), file.getUserid());
 
-        // Get filename from file object
+        if (singleFile != null) {
 
-        // call filemapper.singlefile , pas
-
-//        if above return something it means we have a file with same name
-            // return String message that file exists, return an error return "fileUploadFailure"
-//else if returns null
-        // call filemapper.insertFile(file) and return success msg;
-        filemapper.insertFile(file);
+            // File already exists, hence return an error
+            return fileUploadSuccess = "false";
+        } else {
+            filemapper.insertFile(file);
+            return fileUploadSuccess = "true";
+        }
     }
 
     // Delete file from db

@@ -40,9 +40,12 @@
                                 </div>
                             </div>
                         </form>
-                        <!--  Display the file uploaded successfully message  -->
+                        <!--  Display the file uploaded successfully or failed message  -->
                         <div id="success-msg" th:if="${fileUploadSuccess}" class="alert alert-dark">
                             File Uploaded Successfully - It should be displayed below.
+                        </div>
+                        <div id="failure-msg" th:if="${fileUploadFailure}" class="alert alert-dark">
+                            File already exists in the DB, Upload Failed!.
                         </div>
                         <!--  Display the retrieved files -->
                         <div class="table-responsive">

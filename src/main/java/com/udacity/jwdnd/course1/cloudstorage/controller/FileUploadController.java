@@ -92,15 +92,22 @@ public class FileUploadController {
         User user = userservice.getUser(loggedinUser);
 
         // File model
-        File userSubmittedFile = new File(fileUpload.getOriginalFilename(), fileUpload.getContentType(), Long.toString(fileUpload.getSize()), user.getUserId().toString(), fis.readAllBytes(), uploadedtime.toString());
+        File userSubmittedFile = new File(fileUpload.getOriginalFilename(), fileUpload.getContentType(), Long.toString(fileUpload.getSize()), user.getUserId(), fis.readAllBytes(), uploadedtime.toString());
 
         // Insert the user given file into the DB
-        storageService.insertFileIntoDB(userSubmittedFile);
+        String insertFile = storageService.insertFileIntoDB(userSubmittedFile);
+
         // If the above returns an error, request.setAttribute for fileUploadfailure: true and display in html
         // Check if the returned string is fileUploadSuccess or fileUploadFailure failure and set the http attribute accordingly
+        if (insertFile == "true") {
 
+            // File insert succeeded
+            request.setAttribute("fileUploadSuccess", true);
+        } else {
 
-        request.setAttribute("fileUploadSuccess", true);
+            // File insert failed
+            request.setAttribute("fileUploadFailure", true);
+        }
 
         return "forward:/home";
     }
