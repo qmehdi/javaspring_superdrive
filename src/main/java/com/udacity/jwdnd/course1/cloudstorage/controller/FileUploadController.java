@@ -96,6 +96,9 @@ public class FileUploadController {
 
         // Insert the user given file into the DB
         storageService.insertFileIntoDB(userSubmittedFile);
+        // If the above returns an error, request.setAttribute for fileUploadfailure: true and display in html
+        // Check if the returned string is fileUploadSuccess or fileUploadFailure failure and set the http attribute accordingly
+
 
         request.setAttribute("fileUploadSuccess", true);
 

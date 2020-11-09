@@ -17,8 +17,21 @@ public class FileStorageService {
     }
 
     // Insert file into db
-    public void insertFileIntoDB(File file) {
+    public String insertFileIntoDB(File file) {
 
+        // fileUploadSuccess = null;
+        // fileUploadFailure = null;
+
+        // Get userid from File object
+
+        // Get filename from file object
+
+        // call filemapper.singlefile , pas
+
+//        if above return something it means we have a file with same name
+            // return String message that file exists, return an error return "fileUploadFailure"
+//else if returns null
+        // call filemapper.insertFile(file) and return success msg;
         filemapper.insertFile(file);
     }
 
