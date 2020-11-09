@@ -39,4 +39,9 @@ public class FileStorageService {
         return filemapper.getFileUniverse();
     }
 
+    // Get a single file
+    public File getSingleFile(String filename, Integer userid) {
+
+        return filemapper.getFile(filename, userid);
+    }
 }
