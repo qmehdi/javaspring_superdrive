@@ -4,6 +4,12 @@ import com.udacity.jwdnd.course1.cloudstorage.model.File;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileStorageService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -27,6 +33,27 @@ public class FileUploadController {
 
         this.storageService = storageService;
         this.userservice = userservice;
+    }
+
+    @GetMapping("/file-download/{filename}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable("filename") String filename) {
+
+        // Get authentication object from Spring Security
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Get loggedinuser from authentication object
+        String loggedinUser = authentication.getName();
+
+        // Pass in the username to retrieve the loggedinuser object from the DB
+        User user = userservice.getUser(loggedinUser);
+
+        // Load file from database
+        File dbFile = storageService.getSingleFile(filename, user.getUserId());
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(dbFile.getContenttype()))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFilename() + "\"")
+                .body(new ByteArrayResource(dbFile.getFiledata()));
     }
 
     @RequestMapping(value = "/file-delete/{filename}", method = RequestMethod.GET)
