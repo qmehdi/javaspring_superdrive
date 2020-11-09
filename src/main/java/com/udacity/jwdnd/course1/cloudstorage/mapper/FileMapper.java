@@ -29,12 +29,12 @@ public interface FileMapper {
 
     /**
      * Deletes a given file
-     * @param filename
+     * @param fileid
      * @param userid
      * @return
      */
-    @Select("DELETE FROM FILES WHERE filename = #{filename} and userid = #{userid}")
-    File deleteFile(String filename, Integer userid);
+    @Select("DELETE FROM FILES WHERE fileid = #{fileid} and userid = #{userid}")
+    File deleteFile(Integer fileid, Integer userid);
 
     /**
      * Insert a file

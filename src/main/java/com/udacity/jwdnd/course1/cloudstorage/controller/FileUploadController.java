@@ -56,8 +56,8 @@ public class FileUploadController {
                 .body(new ByteArrayResource(dbFile.getFiledata()));
     }
 
-    @RequestMapping(value = "/file-delete/{filename}", method = RequestMethod.GET)
-    public String deleteFile(@PathVariable String filename) {
+    @RequestMapping(value = "/file-delete/{fileid}", method = RequestMethod.GET)
+    public String deleteFile(@PathVariable Integer fileid) {
 
         // Get authentication object from Spring Security
         authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -68,7 +68,7 @@ public class FileUploadController {
         // Pass in the username to retrieve the loggedinuser object from the DB
         User user = userservice.getUser(loggedinUser);
 
-        storageService.deleteFileFromDB(filename, user.getUserId());
+        storageService.deleteFileFromDB(fileid, user.getUserId());
 
         return "forward:/home";
     }

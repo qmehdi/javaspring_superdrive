@@ -35,9 +35,9 @@ public class FileStorageService {
     }
 
     // Delete file from db
-    public void deleteFileFromDB(String filename, Integer userid) {
+    public void deleteFileFromDB(Integer fileid, Integer userid) {
 
-        filemapper.deleteFile(filename, userid);
+        filemapper.deleteFile(fileid, userid);
     }
 
     // Get all files from db
