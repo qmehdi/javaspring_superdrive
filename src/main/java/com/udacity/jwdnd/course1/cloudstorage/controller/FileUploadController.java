@@ -21,13 +21,29 @@ public class FileUploadController {
 
     private final FileStorageService storageService;
     private final UserService userservice;
-
     private Authentication authentication;
 
     public FileUploadController(FileStorageService storageService, UserService userservice) {
 
         this.storageService = storageService;
         this.userservice = userservice;
+    }
+
+    @RequestMapping(value = "/file-delete/{filename}", method = RequestMethod.GET)
+    public String deleteFile(@PathVariable String filename) {
+
+        // Get authentication object from Spring Security
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Get loggedinuser from authentication object
+        String loggedinUser = authentication.getName();
+
+        // Pass in the username to retrieve the loggedinuser object from the DB
+        User user = userservice.getUser(loggedinUser);
+
+        storageService.deleteFileFromDB(filename, user.getUserId());
+
+        return "forward:/home";
     }
 
     @PostMapping("/file-upload")

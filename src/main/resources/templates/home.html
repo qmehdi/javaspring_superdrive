@@ -59,7 +59,7 @@
                                 <tr>
                                     <td>
                                         <a target="_blank" class="btn btn-success">View</a>
-                                        <a  class="btn btn-danger">Delete</a>
+                                        <a th:href="|@{/file-delete/{filename}(filename=${msg.getFilename()})}|" class="btn btn-danger">Delete</a>
                                     </td>
                                     <td th:text="${msg.getFilename()}" scope="row">...</td>
                                     <td th:text="${msg.getUploadedtime()}" scope="row">...</td>
