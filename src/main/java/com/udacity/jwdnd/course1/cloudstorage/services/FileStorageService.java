@@ -20,6 +20,7 @@ public class FileStorageService {
     public String insertFileIntoDB(File file) {
 
         String fileUploadSuccess = null;
+        String fileIsBlank = null;
 
         // Check if the file already exists in the db
         File singleFile = getSingleFile(file.getFilename(), file.getUserid());

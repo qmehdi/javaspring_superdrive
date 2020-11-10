@@ -47,6 +47,9 @@
                         <div id="failure-msg" th:if="${fileUploadFailure}" class="alert alert-warning">
                             File already exists in the DB, Upload Failed!.
                         </div>
+                        <div id="failure-msg" th:if="${fileEmptyError}" class="alert alert-warning">
+                            File Empty!.
+                        </div>
                         <!--  Display the retrieved files -->
                         <div class="table-responsive">
                             <table class="table table-striped" id="fileTable">

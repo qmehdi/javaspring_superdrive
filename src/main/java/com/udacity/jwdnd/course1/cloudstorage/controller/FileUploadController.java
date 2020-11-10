@@ -14,12 +14,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.DigestException;
 import java.time.Instant;
 
 @Controller
@@ -29,26 +32,38 @@ public class FileUploadController {
     private final UserService userservice;
     private Authentication authentication;
 
+    // Constructor
     public FileUploadController(FileStorageService storageService, UserService userservice) {
 
         this.storageService = storageService;
         this.userservice = userservice;
     }
 
-    @GetMapping("/file-download/{filename}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable("filename") String filename) {
+    // There was a discussion about making this into a @PostConstruct but spring security will not work since at the time
+    // the application starts, there is no user available in the spring context, until the user logs in.
+    public User getLoggedInUserObject() {
 
         // Get authentication object from Spring Security
         authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Get loggedinuser from authentication object
+        // Get loggedinuser's username from authentication object
         String loggedinUser = authentication.getName();
 
         // Pass in the username to retrieve the loggedinuser object from the DB
-        User user = userservice.getUser(loggedinUser);
+        return userservice.getUser(loggedinUser);
+    }
+
+    @GetMapping("/file-download/{filename}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable("filename") String filename) {
+
+        // If user did not provide a file, it would return a user-friendly error message
+        if (StringUtils.isEmpty(filename)) {
+
+            return (ResponseEntity<Resource>) ResponseEntity.notFound();
+        }
 
         // Load file from database
-        File dbFile = storageService.getSingleFile(filename, user.getUserId());
+        File dbFile = storageService.getSingleFile(filename, getLoggedInUserObject().getUserId());
 
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(dbFile.getContenttype()))
@@ -59,16 +74,7 @@ public class FileUploadController {
     @RequestMapping(value = "/file-delete/{fileid}", method = RequestMethod.GET)
     public String deleteFile(@PathVariable Integer fileid) {
 
-        // Get authentication object from Spring Security
-        authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        // Get loggedinuser from authentication object
-        String loggedinUser = authentication.getName();
-
-        // Pass in the username to retrieve the loggedinuser object from the DB
-        User user = userservice.getUser(loggedinUser);
-
-        storageService.deleteFileFromDB(fileid, user.getUserId());
+        storageService.deleteFileFromDB(fileid, getLoggedInUserObject().getUserId());
 
         return "forward:/home";
     }
@@ -77,22 +83,19 @@ public class FileUploadController {
     public String handleFileUpload(@RequestParam("fileUpload")
                                    MultipartFile fileUpload, Model model, HttpServletRequest request) throws IOException {
 
+        if (fileUpload.getSize() == 0) {
+
+            request.setAttribute("fileEmptyError", true);
+            return "forward:/home";
+        }
+
         InputStream fis = fileUpload.getInputStream();
 
         // Get current time
         String uploadedtime = Instant.now().toString();
 
-        // Get authentication object from Spring Security
-        authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        // Get loggedinuser from authentication object
-        String loggedinUser = authentication.getName();
-
-        // Return the loggedinuser object from the DB
-        User user = userservice.getUser(loggedinUser);
-
         // File model
-        File userSubmittedFile = new File(fileUpload.getOriginalFilename(), fileUpload.getContentType(), Long.toString(fileUpload.getSize()), user.getUserId(), fis.readAllBytes(), uploadedtime.toString());
+        File userSubmittedFile = new File(fileUpload.getOriginalFilename(), fileUpload.getContentType(), Long.toString(fileUpload.getSize()), getLoggedInUserObject().getUserId(), fis.readAllBytes(), uploadedtime.toString());
 
         // Insert the user given file into the DB
         String insertFile = storageService.insertFileIntoDB(userSubmittedFile);
