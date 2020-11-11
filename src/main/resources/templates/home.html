@@ -81,6 +81,14 @@
                             + Add a New Note
                         </button>
 
+                            <!-- ######## -->
+                        <form action="#" th:object="${newNotemsg}" th:action="@{/note-upload}" method="POST">
+                            <input th:field="*{notetitle}" type="text">
+                            <input th:field="*{notedescription}" type="text">
+                            <button type="submit">Upload Note</button>
+                        </form>
+                            <!--   ############ -->
+
                         <div class="table-responsive">
                             <table class="table table-striped" id="userTable">
                                 <thead>
