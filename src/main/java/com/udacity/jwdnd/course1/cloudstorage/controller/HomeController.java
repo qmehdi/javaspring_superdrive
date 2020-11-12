@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 import com.udacity.jwdnd.course1.cloudstorage.model.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileStorageService;
+import com.udacity.jwdnd.course1.cloudstorage.services.NoteStorageService;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,12 +19,14 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
 
     private FileStorageService fileStorageService;
+    private NoteStorageService noteStorageService;
     private Authentication authentication;
     private final UserService userService;
 
     // Constructor
-    public HomeController(FileStorageService fileStorageService, UserService userService) {
+    public HomeController(FileStorageService fileStorageService, NoteStorageService noteStorageService, UserService userService) {
         this.fileStorageService = fileStorageService;
+        this.noteStorageService = noteStorageService;
         this.userService = userService;
     }
 
@@ -37,6 +40,8 @@ public class HomeController {
 
         // Return the loggedinuser object from the DB
         User user = userService.getUser(loggedinUser);
+
+        model.addAttribute("list_of_stored_notes", noteStorageService.getNotesUniverse());
 
         model.addAttribute("list_of_stored_files", fileStorageService.getAllFilesFromDB(user.getUserId()));
 

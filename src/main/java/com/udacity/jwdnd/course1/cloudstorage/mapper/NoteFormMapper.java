@@ -50,6 +50,6 @@ public interface NoteFormMapper {
      * Get all notes in the Universe
      * @return
      */
-    @Select("SELECT * NOTES")
+    @Select("SELECT * FROM NOTES")
     List<NoteForm> getNoteUniverse();
 }

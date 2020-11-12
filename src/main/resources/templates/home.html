@@ -61,6 +61,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                <th:block th:each="msg : ${list_of_stored_notes}">
+                                    <tr>
+                                        <td class="d-inline-flex">
+                                            <a target="_blank" class="btn btn-success mb-2 mr-2">View</a></td>
+                                        <td th:text="${msg.getNotetitle()}" scope="row" class="font-weight-bold">...</td>
+                                        <td th:text="${msg.getNotedescription()}" scope="row">...</td>
+                                    </tr>
+                                </tbody>
+                                </th:block>
+
+
                                 <th:block th:each="msg : ${list_of_stored_files}">
                                 <tr>
                                     <td class="d-inline-flex">

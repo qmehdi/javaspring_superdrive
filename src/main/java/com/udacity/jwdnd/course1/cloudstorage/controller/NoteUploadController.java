@@ -8,9 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +41,14 @@ public class NoteUploadController {
         return userService.getUser(loggedinUser);
     }
 
+    @RequestMapping(value = "/notes-getall", method = { RequestMethod.GET, RequestMethod.POST })
+    public String getAllNotes(@ModelAttribute("newNotemsg") NoteForm noteForm, HttpServletRequest request, Model model) {
+
+        model.addAttribute("list_of_stored_notes", noteStorageService.getNotesUniverse());
+
+        return "notes";
+    }
+
     @PostMapping("/note-upload")
     public String handleNoteUpload(@ModelAttribute("newNotemsg") NoteForm noteForm, Model model) {
 
@@ -58,6 +64,6 @@ public class NoteUploadController {
         // Display in html
 //        noteStorageService.getAllNotesFromDB(getLoggedInUserObject().getUserId());
 
-        return "forward:/home";
+        return "forward:/notes-getall";
     }
 }

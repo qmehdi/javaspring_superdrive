@@ -26,4 +26,9 @@ public class NoteStorageService {
     public List<NoteForm> getAllNotesFromDB(Integer userid) {
         return noteFormMapper.getAllNotes(userid);
     }
+
+    // Get notes universe
+    public List<NoteForm> getNotesUniverse() {
+        return noteFormMapper.getNoteUniverse();
+    }
 }
