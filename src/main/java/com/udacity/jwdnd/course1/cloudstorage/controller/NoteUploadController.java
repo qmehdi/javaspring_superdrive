@@ -64,6 +64,6 @@ public class NoteUploadController {
         // Display in html
 //        noteStorageService.getAllNotesFromDB(getLoggedInUserObject().getUserId());
 
-        return "forward:/notes-getall";
+        return "forward:/home";
     }
 }

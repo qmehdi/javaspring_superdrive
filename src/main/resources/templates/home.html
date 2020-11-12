@@ -61,18 +61,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                <th:block th:each="msg : ${list_of_stored_notes}">
-                                    <tr>
-                                        <td class="d-inline-flex">
-                                            <a target="_blank" class="btn btn-success mb-2 mr-2">View</a></td>
-                                        <td th:text="${msg.getNotetitle()}" scope="row" class="font-weight-bold">...</td>
-                                        <td th:text="${msg.getNotedescription()}" scope="row">...</td>
-                                    </tr>
-                                </tbody>
-                                </th:block>
-
-
                                 <th:block th:each="msg : ${list_of_stored_files}">
                                 <tr>
                                     <td class="d-inline-flex">
@@ -88,18 +76,27 @@
                             </table>
                         </div>
                     </div>
+                    <!--  @@@@@@@@@@ START OF NOTES DIV @@@@@@@@@@ -->
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
                         <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
 
-                            <!-- ######## -->
                         <form action="#" th:object="${newNotemsg}" th:action="@{/note-upload}" method="POST">
                             <input th:field="*{notetitle}" type="text">
                             <input th:field="*{notedescription}" type="text">
                             <button type="submit">Upload Note</button>
                         </form>
-                            <!--   ############ -->
+
+<!--                        <th:block th:each="msg : ${list_of_stored_notes}">-->
+<!--                            <tr>-->
+<!--                                <td class="d-inline-flex">-->
+<!--                                    <a target="_blank" class="btn btn-success mb-2 mr-2">View</a></td>-->
+<!--                                <td th:text="${msg.getNotetitle()}" scope="row" class="font-weight-bold">...</td>-->
+<!--                                <td th:text="${msg.getNotedescription()}" scope="row">...</td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </th:block>-->
 
                         <div class="table-responsive">
                             <table class="table table-striped" id="userTable">
@@ -111,14 +108,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <th:block th:each="msg : ${list_of_stored_notes}">
                                     <tr>
                                         <td>
                                             <button type="button" class="btn btn-success">Edit</button>
                                             <a class="btn btn-danger">Delete</a>
                                         </td>
-                                        <th scope="row">Example Note Title</th>
-                                        <td>Example Note Description </td>
+                                        <th th:text="${msg.getNotetitle()}" scope="row" class="font-weight-bold">...</th>
+                                        <td th:text="${msg.getNotedescription()}" scope="row">...</td>
                                     </tr>
+                                </th:block>
                                 </tbody>
                             </table>
                         </div>
