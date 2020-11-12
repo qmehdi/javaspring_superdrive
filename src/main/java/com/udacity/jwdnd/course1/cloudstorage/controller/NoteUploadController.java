@@ -56,13 +56,21 @@ public class NoteUploadController {
         String uploadedtime = Instant.now().toString();
 
         // Note model
-        NoteForm userSubmittedNote = new NoteForm(noteForm.getNotetitle(), noteForm.getNotedescription());
+        NoteForm userSubmittedNote = new NoteForm(noteForm.getNoteId(), noteForm.getNotetitle(), noteForm.getNotedescription());
 
         // Insert operation
         noteStorageService.insertNoteIntoDB(userSubmittedNote);
 
         // Display in html
 //        noteStorageService.getAllNotesFromDB(getLoggedInUserObject().getUserId());
+
+        return "forward:/home";
+    }
+
+    @RequestMapping(value = "/note-delete/{noteId}", method = RequestMethod.GET)
+    public String deleteNote(@PathVariable Integer noteId) {
+
+        noteStorageService.deleteNoteFromDB(noteId);
 
         return "forward:/home";
     }

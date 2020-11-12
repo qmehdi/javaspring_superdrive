@@ -31,4 +31,8 @@ public class NoteStorageService {
     public List<NoteForm> getNotesUniverse() {
         return noteFormMapper.getNoteUniverse();
     }
+
+    public void deleteNoteFromDB(Integer noteId) {
+        noteFormMapper.deleteNote(noteId);
+    }
 }

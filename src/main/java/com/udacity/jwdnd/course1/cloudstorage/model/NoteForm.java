@@ -9,7 +9,8 @@ public class NoteForm {
     private Integer userid;
 
     // Constructor
-    public NoteForm(String notetitle, String notedescription) {
+    public NoteForm(Integer noteId, String notetitle, String notedescription) {
+        this.noteId = noteId;
         this.notetitle = notetitle;
         this.notedescription = notedescription;
     }

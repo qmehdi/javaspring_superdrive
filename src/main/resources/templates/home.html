@@ -95,7 +95,7 @@
                                     <tr>
                                         <td>
                                             <button type="button" class="btn btn-success" onclick="showNoteModal(parseInt(document.getElementById('note_id').innerHTML), document.getElementById('note_title').innerHTML, document.getElementById('note_desc').innerHTML)">Edit</button>
-                                            <a th:href="|@{/note-delete/{noteId}(noteid=${msg.getNoteId()})}|" class="btn btn-danger" id="note_id" >Delete</a>
+                                            <a th:href="|@{/note-delete/{noteId}(noteId=${msg.getNoteId()})}|" class="btn btn-danger" id="note_id" >Delete</a>
                                         </td>
                                         <th th:text="${msg.getNotetitle()}" scope="row" class="font-weight-bold" id="note_title">...</th>
                                         <td th:text="${msg.getNotedescription()}" scope="row" id="note_desc">...</td>

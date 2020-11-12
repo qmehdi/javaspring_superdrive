@@ -34,8 +34,8 @@ public interface NoteFormMapper {
      * @param userid
      * @return
      */
-    @Select("DELETE FROM NOTES WHERE noteid = #{noteid} and userid = #{userid}")
-    NoteForm deleteNote(Integer noteid, Integer userid);
+    @Select("DELETE FROM NOTES WHERE noteid = #{noteid}")
+    NoteForm deleteNote(Integer noteid);
 
     /**
      * Insert a note
