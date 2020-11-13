@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS FILES (
     filesize VARCHAR,
     userid INT,
     filedata BLOB,
+    uploadedtime VARCHAR,
     foreign key (userid) references USERS(userid)
 );
 
