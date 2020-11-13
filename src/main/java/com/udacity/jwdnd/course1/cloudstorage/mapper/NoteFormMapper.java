@@ -1,10 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.mapper;
 
 import com.udacity.jwdnd.course1.cloudstorage.model.NoteForm;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -51,5 +48,6 @@ public interface NoteFormMapper {
      * @return
      */
     @Select("SELECT * FROM NOTES")
+//    @Results({ @Result(property = "noteId", column = "noteid",id=true), @Result(property = "notetitle", column = "notetitle"), @Result(property = "notedescription", column = "notedescription"), @Result(property = "userid", column = "userid")})
     List<NoteForm> getNoteUniverse();
 }

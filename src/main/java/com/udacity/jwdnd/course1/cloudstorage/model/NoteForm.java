@@ -1,5 +1,8 @@
 package com.udacity.jwdnd.course1.cloudstorage.model;
 
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+
 // POJO - This class is backing the submitted note object
 public class NoteForm {
 
@@ -8,11 +11,15 @@ public class NoteForm {
     private String notedescription;
     private Integer userid;
 
+    // Empty Constructor - This is necessary to accommodate the fact that the noteId is not part of the second constructor.
+    public NoteForm() {
+    }
+
     // Constructor
-    public NoteForm(Integer noteId, String notetitle, String notedescription) {
-        this.noteId = noteId;
+    public NoteForm(String notetitle, String notedescription, Integer userid) {
         this.notetitle = notetitle;
         this.notedescription = notedescription;
+        this.userid = userid;
     }
 
     public Integer getNoteId() {

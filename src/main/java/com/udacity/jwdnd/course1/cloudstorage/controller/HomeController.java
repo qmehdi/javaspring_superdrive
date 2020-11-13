@@ -41,7 +41,7 @@ public class HomeController {
         // Return the loggedinuser object from the DB
         User user = userService.getUser(loggedinUser);
 
-        model.addAttribute("list_of_stored_notes", noteStorageService.getNotesUniverse());
+        model.addAttribute("list_of_stored_notes", noteStorageService.getAllNotesFromDB(user.getUserId()));
 
         model.addAttribute("list_of_stored_files", fileStorageService.getAllFilesFromDB(user.getUserId()));
 

@@ -56,7 +56,7 @@ public class NoteUploadController {
         String uploadedtime = Instant.now().toString();
 
         // Note model
-        NoteForm userSubmittedNote = new NoteForm(noteForm.getNoteId(), noteForm.getNotetitle(), noteForm.getNotedescription());
+        NoteForm userSubmittedNote = new NoteForm(noteForm.getNotetitle(), noteForm.getNotedescription(), getLoggedInUserObject().getUserId());
 
         // Insert operation
         noteStorageService.insertNoteIntoDB(userSubmittedNote);
