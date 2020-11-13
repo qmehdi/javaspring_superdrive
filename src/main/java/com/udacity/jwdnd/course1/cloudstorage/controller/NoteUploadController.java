@@ -41,14 +41,6 @@ public class NoteUploadController {
         return userService.getUser(loggedinUser);
     }
 
-    @RequestMapping(value = "/notes-getall", method = { RequestMethod.GET, RequestMethod.POST })
-    public String getAllNotes(@ModelAttribute("newNotemsg") NoteForm noteForm, HttpServletRequest request, Model model) {
-
-        model.addAttribute("list_of_stored_notes", noteStorageService.getNotesUniverse());
-
-        return "notes";
-    }
-
     @PostMapping("/note-upload")
     public String handleNoteUpload(@ModelAttribute("newNotemsg") NoteForm noteForm, Model model) {
 
