@@ -156,7 +156,7 @@
                                 <tr>
                                     <td>
                                         <button type="button" class="btn btn-success">Edit</button>
-                                        <a class="btn btn-danger">Delete</a>
+                                        <a th:href="|@{/credential-delete/{credentialId}(credentialId=${msg.getCredentialId()})}|" class="btn btn-danger">Delete</a>
                                     </td>
                                     <td th:text="${msg.getUrl()}" scope="row">...</td>
                                     <td th:text="${msg.getUsername()}">...</td>
