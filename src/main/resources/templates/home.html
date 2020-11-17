@@ -12,7 +12,7 @@
         <div class="container">
             <div id="logoutDiv">
                 <form action="#" th:action="@{/logout}" method="POST">
-                    <button type="submit" class="btn btn-secondary float-right">Logout</button>
+                    <button type="submit" class="btn btn-secondary float-right" onclick="localStorage.setItem('activeTab', '#nav-files');">Logout</button>
                 </form>
             </div>
             <div id="contentDiv" style="clear: right;">
@@ -226,6 +226,19 @@
                 $('#credential-password').val(password ? password : '');
                 $('#credentialModal').modal('show');
             }
+
+            // When submitting a file, note, or credential, this keeps the user on the same relevant tab
+            $(document).ready(function(){
+                $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+                    localStorage.setItem('activeTab', $(e.target).attr('href'));
+                });
+                var activeTab = localStorage.getItem('activeTab');
+                if(activeTab){
+                    $('#nav-tab a[href="' + activeTab + '"]').tab('show');
+                } else {
+                    $('#nav-tab a[href="' + '#nav-files' + '"]').tab('show');
+                }
+            });
         </script>
     </body>
 </html>
