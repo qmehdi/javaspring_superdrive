@@ -50,8 +50,21 @@ public class NoteUploadController {
         // Note model
         NoteForm userSubmittedNote = new NoteForm(noteForm.getNotetitle(), noteForm.getNotedescription(), getLoggedInUserObject().getUserId());
 
-        // Insert operation
-        noteStorageService.insertNoteIntoDB(userSubmittedNote);
+//        // Insert operation
+//        noteStorageService.insertNoteIntoDB(userSubmittedNote);
+
+        // If noteId is not null, that means we are in edit mode
+        if (noteForm.getNoteId() != null ) {
+
+            // Invoke Update method
+            // Notice that we are not sending in the constructed userSubmittedNote into the update function because we need to preserve the original noteId
+            // Instead we are sending in the submitted noteForm object.
+            noteStorageService.updateNoteInDB(noteForm);
+        } else {
+
+            // Invoke Insert method
+            noteStorageService.insertNoteIntoDB(userSubmittedNote);
+        }
 
         // Display in html
 //        noteStorageService.getAllNotesFromDB(getLoggedInUserObject().getUserId());

@@ -50,4 +50,12 @@ public interface NoteFormMapper {
     @Select("SELECT * FROM NOTES")
 //    @Results({ @Result(property = "noteId", column = "noteid",id=true), @Result(property = "notetitle", column = "notetitle"), @Result(property = "notedescription", column = "notedescription"), @Result(property = "userid", column = "userid")})
     List<NoteForm> getNoteUniverse();
+
+    /**
+     * Update a note that already exists in the db
+     * @param note
+     * @return
+     */
+    @Update("UPDATE NOTES SET notetitle=#{notetitle}, notedescription=#{notedescription} WHERE noteId=#{noteId}")
+    int updateNote(NoteForm note);
 }
