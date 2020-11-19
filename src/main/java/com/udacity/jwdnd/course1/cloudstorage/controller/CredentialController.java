@@ -46,6 +46,7 @@ public class CredentialController {
     public String createCredential(@ModelAttribute("newCredentialmsg") Credential credentialForm, Model model) {
 
         // Encrypt the password
+        // It is being executed for both Insert and update
         SecureRandom random = new SecureRandom();
         byte[] key = new byte[16];
         random.nextBytes(key);
@@ -55,7 +56,19 @@ public class CredentialController {
         // Create the credential object using the form fields, encodedKey, and encryptedPassword
         Credential userSubmittedCredential = new Credential(credentialForm.getUrl(), credentialForm.getUsername(), encodedKey, encryptedPassword, getLoggedInUserObject().getUserId());
 
-        credentialService.insertCredentialIntoDB(userSubmittedCredential);
+        // If credentialId is not null, that means we are in edit mode
+        if (credentialForm.getCredentialId() != null) {
+
+            userSubmittedCredential.setCredentialId(credentialForm.getCredentialId());
+            // Invoke Update method
+            // Notice that we are not sending in the constructed userSubmittedCredential into the update function because we need to preserve the original credentialId
+            // Instead we are sending in the submitted credentialForm object.
+            credentialService.updateCredentialInDB(userSubmittedCredential);
+        } else {
+
+            // Invoke Insert method
+            credentialService.insertCredentialIntoDB(userSubmittedCredential);
+        }
 
         return "forward:/home";
     }

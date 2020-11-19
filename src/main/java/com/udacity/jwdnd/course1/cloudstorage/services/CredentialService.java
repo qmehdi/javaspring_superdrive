@@ -35,4 +35,9 @@ public class CredentialService {
     public void deleteCredential(Integer credentialId) {
         credentialMapper.deleteCredential(credentialId);
     }
+
+    // UPDATE
+    public int updateCredentialInDB(Credential updatedCredentialForm) {
+        return credentialMapper.updateCredential(updatedCredentialForm);
+    }
 }
