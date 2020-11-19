@@ -75,7 +75,7 @@ public class NoteUploadController {
     @RequestMapping(value = "/note-delete/{noteId}", method = RequestMethod.GET)
     public String deleteNote(@PathVariable Integer noteId) {
 
-        noteStorageService.deleteNoteFromDB(noteId);
+        noteStorageService.deleteNoteFromDB(noteId, getLoggedInUserObject().getUserId());
 
         return "forward:/home";
     }
