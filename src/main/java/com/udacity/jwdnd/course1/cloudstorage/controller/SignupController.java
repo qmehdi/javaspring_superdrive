@@ -31,13 +31,19 @@ public class SignupController {
         String signupError = null;
 
         if (!userService.isUsernameAvailable(user.getUsername())) {
-            signupError = "The username already exists.";
+            signupError = "Signup Error: The username already exists.";
+
+            // home.html looks for "signupError" attribute and flashes the message contained in signupError variable
+            request.setAttribute("signupError", signupError);
         }
 
         if (signupError == null) {
             int rowsAdded = userService.createUser(user);
             if (rowsAdded < 0) {
-                signupError = "There was an error signing you up. Please try again.";
+                signupError = "Signup Error: There was an error signing you up. Please try again.";
+
+                // home.html looks for "signupError" attribute and flashes the message contained in signupError variable
+                request.setAttribute("signupError", signupError);
             }
         }
 
