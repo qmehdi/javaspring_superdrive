@@ -3,10 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.controller;
 import com.udacity.jwdnd.course1.cloudstorage.model.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.model.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.model.User;
-import com.udacity.jwdnd.course1.cloudstorage.services.CredentialService;
-import com.udacity.jwdnd.course1.cloudstorage.services.FileStorageService;
-import com.udacity.jwdnd.course1.cloudstorage.services.NoteStorageService;
-import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import com.udacity.jwdnd.course1.cloudstorage.services.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,14 +20,16 @@ public class HomeController {
     private FileStorageService fileStorageService;
     private NoteStorageService noteStorageService;
     private CredentialService credentialService;
+    private EncryptionService encryptionService;
     private Authentication authentication;
     private final UserService userService;
 
     // Constructor
-    public HomeController(FileStorageService fileStorageService, NoteStorageService noteStorageService, CredentialService credentialService, UserService userService) {
+    public HomeController(FileStorageService fileStorageService, NoteStorageService noteStorageService, CredentialService credentialService, EncryptionService encryptionService, UserService userService) {
         this.fileStorageService = fileStorageService;
         this.noteStorageService = noteStorageService;
         this.credentialService = credentialService;
+        this.encryptionService = encryptionService;
         this.userService = userService;
     }
 
@@ -48,6 +47,8 @@ public class HomeController {
         User user = userService.getUser(loggedinUser);
 
         Integer loggedInUserId = user.getUserId();
+
+        model.addAttribute("encryptionService", encryptionService);
 
         model.addAttribute("list_of_stored_credentials", credentialService.getAllCredentialsFromDB(loggedInUserId));
 
