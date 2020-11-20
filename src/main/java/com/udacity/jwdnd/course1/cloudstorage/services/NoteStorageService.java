@@ -27,13 +27,8 @@ public class NoteStorageService {
         return noteFormMapper.getAllNotes(userid);
     }
 
-    // Get notes universe
-    public List<NoteForm> getNotesUniverse() {
-        return noteFormMapper.getNoteUniverse();
-    }
-
-    public void deleteNoteFromDB(Integer noteId) {
-        noteFormMapper.deleteNote(noteId);
+    public void deleteNoteFromDB(Integer noteId, Integer userid) {
+        noteFormMapper.deleteNote(noteId, userid);
     }
 
     // Update an existing note in the db

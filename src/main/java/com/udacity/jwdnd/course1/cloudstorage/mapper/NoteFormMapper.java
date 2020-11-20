@@ -31,8 +31,8 @@ public interface NoteFormMapper {
      * @param userid
      * @return
      */
-    @Select("DELETE FROM NOTES WHERE noteid = #{noteid}")
-    NoteForm deleteNote(Integer noteid);
+    @Select("DELETE FROM NOTES WHERE noteid = #{noteid} AND userid=#{userid}")
+    NoteForm deleteNote(Integer noteid, Integer userid);
 
     /**
      * Insert a note
@@ -43,19 +43,19 @@ public interface NoteFormMapper {
     @Options(useGeneratedKeys = true, keyProperty = "noteId")
     int insertNote(NoteForm note);
 
-    /**
-     * Get all notes in the Universe
-     * @return
-     */
-    @Select("SELECT * FROM NOTES")
-//    @Results({ @Result(property = "noteId", column = "noteid",id=true), @Result(property = "notetitle", column = "notetitle"), @Result(property = "notedescription", column = "notedescription"), @Result(property = "userid", column = "userid")})
-    List<NoteForm> getNoteUniverse();
+//    /**
+//     * Get all notes in the Universe
+//     * @return
+//     */
+//    @Select("SELECT * FROM NOTES")
+////    @Results({ @Result(property = "noteId", column = "noteid",id=true), @Result(property = "notetitle", column = "notetitle"), @Result(property = "notedescription", column = "notedescription"), @Result(property = "userid", column = "userid")})
+//    List<NoteForm> getNoteUniverse();
 
     /**
      * Update a note that already exists in the db
      * @param note
      * @return
      */
-    @Update("UPDATE NOTES SET notetitle=#{notetitle}, notedescription=#{notedescription} WHERE noteId=#{noteId}")
+    @Update("UPDATE NOTES SET notetitle=#{notetitle}, notedescription=#{notedescription} WHERE noteId=#{noteId} AND userid=#{userid}")
     int updateNote(NoteForm note);
 }

@@ -28,10 +28,11 @@ public interface CredentialMapper {
     /**
      * Delete a given credential
      * @param credentialid
+     * @Param userid
      * @return
      */
-    @Select("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialid}")
-    Credential deleteCredential(Integer credentialid);
+    @Select("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialid} AND userid = #{userid}")
+    Credential deleteCredential(Integer credentialid, Integer userid);
 
     /**
      * Insert a credential
@@ -43,17 +44,10 @@ public interface CredentialMapper {
     int insertCredential(Credential credential);
 
     /**
-     * Get all credentials in the universe
-     * @return
-     */
-    @Select("SELECT * FROM CREDENTIALS")
-    List<Credential> getCredentialUniverse();
-
-    /**
      * Update a credential that already exists in the db
      * @param credential
      * @return
      */
-    @Update("UPDATE CREDENTIALS SET url=#{url}, username=#{username}, key=#{key}, password=#{password} WHERE credentialId=#{credentialId}")
+    @Update("UPDATE CREDENTIALS SET url=#{url}, username=#{username}, key=#{key}, password=#{password} WHERE credentialId=#{credentialId} AND userid = #{userid}")
     int updateCredential(Credential credential);
 }

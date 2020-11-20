@@ -56,10 +56,13 @@ public class NoteUploadController {
         // If noteId is not null, that means we are in edit mode
         if (noteForm.getNoteId() != null ) {
 
+            // To update an existing note, we need to fill in the noteId using the noteForm field
+            userSubmittedNote.setNoteId(noteForm.getNoteId());
+
             // Invoke Update method
             // Notice that we are not sending in the constructed userSubmittedNote into the update function because we need to preserve the original noteId
             // Instead we are sending in the submitted noteForm object.
-            noteStorageService.updateNoteInDB(noteForm);
+            noteStorageService.updateNoteInDB(userSubmittedNote);
         } else {
 
             // Invoke Insert method
@@ -75,7 +78,7 @@ public class NoteUploadController {
     @RequestMapping(value = "/note-delete/{noteId}", method = RequestMethod.GET)
     public String deleteNote(@PathVariable Integer noteId) {
 
-        noteStorageService.deleteNoteFromDB(noteId);
+        noteStorageService.deleteNoteFromDB(noteId, getLoggedInUserObject().getUserId());
 
         return "forward:/home";
     }
