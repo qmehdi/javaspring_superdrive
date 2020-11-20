@@ -42,13 +42,13 @@
                         </form>
                         <!--  Display the file uploaded successfully or failed message  -->
                         <div id="success-msg" th:if="${fileUploadSuccess}" class="alert alert-success">
-                            File Uploaded Successfully - It should be displayed below.
+                            <div th:text="${fileUploadSuccess}"></div>
                         </div>
                         <div id="failure-msg" th:if="${fileUploadFailure}" class="alert alert-warning">
-                            File already exists in the DB, Upload Failed!.
+                            <div th:text="${fileUploadFailure}"></div>
                         </div>
-                        <div id="failure-msg" th:if="${fileEmptyError}" class="alert alert-warning">
-                            File Empty!.
+                        <div id="failure-msg2" th:if="${fileEmptyError}" class="alert alert-warning">
+                            <div th:text="${fileEmptyError}"></div>
                         </div>
                         <!--  Display the retrieved files -->
                         <div class="table-responsive">
@@ -64,7 +64,6 @@
                                 <th:block th:each="msg : ${list_of_stored_files}">
                                 <tr>
                                     <td class="d-inline-flex">
-                                        <a target="_blank" class="btn btn-success mb-2 mr-2">View</a>
                                         <a th:href="|@{/file-download/{filename}(filename=${msg.getFilename()})}|" target="_blank" class="btn btn-primary mb-2 mr-2">Download</a>
                                         <a th:href="|@{/file-delete/{fileid}(fileid=${msg.getFileId()})}|" class="btn btn-danger mb-2 mr-2">Delete</a>
                                     </td>
