@@ -26,14 +26,9 @@ public class CredentialService {
         return credentialMapper.getAllCredentials(userid);
     }
 
-    // SELECT * ALL
-    public List<Credential> getCredentialUniverse() {
-        return credentialMapper.getCredentialUniverse();
-    }
-
     // DELETE
-    public void deleteCredential(Integer credentialId) {
-        credentialMapper.deleteCredential(credentialId);
+    public void deleteCredential(Integer credentialId, Integer userid) {
+        credentialMapper.deleteCredential(credentialId, userid);
     }
 
     // UPDATE
