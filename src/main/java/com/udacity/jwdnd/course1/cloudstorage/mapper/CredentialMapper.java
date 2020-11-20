@@ -9,15 +9,6 @@ import java.util.List;
 public interface CredentialMapper {
 
     /**
-     * Returns a single credential row
-     * @param credentialid
-     * @param userid
-     * @return
-     */
-    @Select("SELECT * FROM CREDENTIALS WHERE credentialid = #{credentialid} and userid = #{userid}")
-    Credential getCredential(Integer credentialid, Integer userid);
-
-    /**
      * Returns all credentials for a given userid
      * @param userid
      * @return

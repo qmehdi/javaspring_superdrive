@@ -85,7 +85,7 @@ public class FileUploadController {
 
         if (fileUpload.getSize() == 0) {
 
-            request.setAttribute("fileEmptyError", true);
+            request.setAttribute("fileEmptyError", "File Empty!");
             return "forward:/home";
         }
 
@@ -105,11 +105,11 @@ public class FileUploadController {
         if (insertFile == "true") {
 
             // File insert succeeded
-            request.setAttribute("fileUploadSuccess", true);
+            request.setAttribute("fileUploadSuccess", "File Uploaded Successfully - It should be displayed below.");
         } else {
 
             // File insert failed
-            request.setAttribute("fileUploadFailure", true);
+            request.setAttribute("fileUploadFailure", "File already exists in the DB, Upload Failed!");
         }
 
         return "forward:/home";

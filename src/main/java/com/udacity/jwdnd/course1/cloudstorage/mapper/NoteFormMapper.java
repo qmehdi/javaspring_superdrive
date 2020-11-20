@@ -9,15 +9,6 @@ import java.util.List;
 public interface NoteFormMapper {
 
     /**
-     * Returns a single note for the logged-in user
-     * @param notetitle
-     * @param userid
-     * @return
-     */
-    @Select("SELECT * FROM NOTES WHERE notetitle = #{notetitle} and userid = #{userid}")
-    NoteForm getNote(String notetitle, Integer userid);
-
-    /**
      * Returns list of notes for the logged-in user
      * @param userid
      * @return
