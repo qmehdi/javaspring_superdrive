@@ -76,7 +76,7 @@ public class CredentialController {
     @RequestMapping(value = "/credential-delete/{credentialId}", method = { RequestMethod.GET })
     public String deleteCredential(@PathVariable Integer credentialId) {
 
-        credentialService.deleteCredential((credentialId));
+        credentialService.deleteCredential(credentialId, getLoggedInUserObject().getUserId());
         return "forward:/home";
     }
 
