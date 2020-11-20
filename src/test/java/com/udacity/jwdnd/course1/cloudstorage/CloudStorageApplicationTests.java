@@ -48,10 +48,14 @@ class CloudStorageApplicationTests {
 
 		signUpPage.performSignUp(_firstName, _lastName, _username, _password);
 
-		Thread.sleep(5000);
+		Thread.sleep(2000);
 
 		// ########### Login ##############
-		
+		LoginPage loginPage = new LoginPage(driver);
+
+		loginPage.performLogin(_username, _password);
+
+		Thread.sleep(2000);
 	}
 
 //	// Sign up and Login
