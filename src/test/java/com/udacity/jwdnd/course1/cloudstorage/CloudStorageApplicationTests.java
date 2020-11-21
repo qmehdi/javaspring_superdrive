@@ -78,4 +78,21 @@ class CloudStorageApplicationTests {
 		assertEquals("loginPage", page_title_after_logout);
 		Thread.sleep(1500);
 	}
+
+	/* Test that verifies that the home page is not accessible without logging in. */
+	@Test
+	public void testhomeNotAccessible() throws InterruptedException {
+
+		driver.get("http://localhost:" + this.port + "/home");
+
+		// Should get the /login page
+		LoginPage loginPage = new LoginPage(driver);
+		String login_page_title = loginPage.getPageTitle();
+
+		// ##########################################
+		// ########## ASSERT LOGIN PAGE ##############
+		// ##########################################
+		assertEquals("loginPage", login_page_title);
+		Thread.sleep(1500);
+	}
 }
