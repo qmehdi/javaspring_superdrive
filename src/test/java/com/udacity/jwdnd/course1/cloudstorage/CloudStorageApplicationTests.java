@@ -15,6 +15,7 @@ import javax.swing.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class CloudStorageApplicationTests {
 
 	@LocalServerPort
@@ -75,6 +76,7 @@ class CloudStorageApplicationTests {
 
 	/* Test that signs up a new user, logs that user in, verifies that they can access the home page, then logs out and verifies that the home page is no longer accessible */
 	@Test
+	@Order(1)
 	public void testUserSignupAndLogin() throws InterruptedException{
 
 		signUpUser("john", "doe", "jdoe", "test123!");
@@ -103,6 +105,7 @@ class CloudStorageApplicationTests {
 
 	/* Test that verifies that the home page is not accessible without logging in. */
 	@Test
+	@Order(2)
 	public void testhomeNotAccessible() throws InterruptedException {
 
 		driver.get("http://localhost:" + this.port + "/home");
@@ -117,6 +120,7 @@ class CloudStorageApplicationTests {
 
 	/* Test that logs in an existing user, creates a note and verifies that the note details are visible in the note list. */
 	@Test
+	@Order(3)
 	public void testNoteCreate() throws InterruptedException {
 		driver.get("http://localhost:" + this.port + "/signup");
 
