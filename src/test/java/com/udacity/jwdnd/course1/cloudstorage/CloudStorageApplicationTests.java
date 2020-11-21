@@ -158,7 +158,7 @@ class CloudStorageApplicationTests {
 	/* Test that logs in an existing user with existing notes, clicks the edit note button on an existing note, changes the note data, saves the changes, and verifies that the changes appear in the note list. */
 	@Test
 	@Order(4)
-	public void testExistingNote() throws InterruptedException {
+	public void testEditExistingNote() throws InterruptedException {
 		driver.get("http://localhost:" + this.port + "/login");
 		Thread.sleep(2000);
 
@@ -190,4 +190,31 @@ class CloudStorageApplicationTests {
 		Thread.sleep(2000);
 	}
 
+	/* Test that logs in an existing user with existing notes, clicks the delete note button on an existing note, and verifies that the note no longer appears in the note list. */
+	@Test
+	@Order(5)
+	public void testDeleteExistingNote() throws InterruptedException {
+		driver.get("http://localhost:" + this.port + "/login");
+		Thread.sleep(2000);
+
+		loginUser("jdoe", "test123!");
+		Thread.sleep(2500);
+
+		// Retrieve the Notes tab and click on it
+		HomePage homePage = new HomePage(driver);
+		driver.findElement(By.id("nav-notes-tab")).click();
+		Thread.sleep(1000);
+
+		// Retrieve the Notes table displaying existing notes
+		driver.findElement(By.id("retrieved-notes-display"));
+		Thread.sleep(2000);
+
+		// Find Delete button and click on it
+		driver.findElement(By.className("btn-danger")).click();
+		Thread.sleep(2000);
+
+		// Check if retrieved-notes-display table doesn't show up after delete
+		assertNotEquals("retrieved-notes-display", driver.findElement(By.id("retrieved-notes-display")).getText());
+		Thread.sleep(2000);
+	}
 }
