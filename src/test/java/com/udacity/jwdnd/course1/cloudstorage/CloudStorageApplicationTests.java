@@ -10,8 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
-import javax.swing.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -44,13 +42,14 @@ class CloudStorageApplicationTests {
 	// ##########################################
 	// ################ Sign Up #################
 	// ##########################################
-	public void signUpUser(String firstName, String lastName, String username, String password) {
+	public void signUpUser(String firstName, String lastName, String username, String password) throws InterruptedException{
 		String _firstName = firstName;
 		String _lastName = lastName;
 		String _username = username;
 		String _password = password;
 
 		driver.get("http://localhost:" + this.port + "/signup");
+		Thread.sleep(2000);
 
 		SignUpPage signUpPage = new SignUpPage(driver);
 		signUpPage.performSignUp(_firstName, _lastName, _username, _password);
@@ -109,6 +108,7 @@ class CloudStorageApplicationTests {
 	public void testhomeNotAccessible() throws InterruptedException {
 
 		driver.get("http://localhost:" + this.port + "/home");
+		Thread.sleep(2000);
 
 		// Should get the /login page
 		LoginPage loginPage = new LoginPage(driver);
@@ -123,13 +123,17 @@ class CloudStorageApplicationTests {
 	@Order(3)
 	public void testNoteCreate() throws InterruptedException {
 		driver.get("http://localhost:" + this.port + "/signup");
+		Thread.sleep(2000);
 
+		// Signup and Login user
 		signUpUser("jdoe", "jdoe", "jdoe", "test123!");
+		Thread.sleep(2000);
 		loginUser("jdoe", "test123!");
 		Thread.sleep(2500);
 
 		// Retrieve the Notes tab and click on it
 		HomePage homePage = new HomePage(driver);
+		Thread.sleep(2000);
 		driver.findElement(By.id("nav-notes-tab")).click();
 		Thread.sleep(1000);
 
@@ -150,4 +154,40 @@ class CloudStorageApplicationTests {
 		assertEquals("retrieved-notes-display", retrieved_notes_table);
 		Thread.sleep(2000);
 	}
+
+	/* Test that logs in an existing user with existing notes, clicks the edit note button on an existing note, changes the note data, saves the changes, and verifies that the changes appear in the note list. */
+	@Test
+	@Order(4)
+	public void testExistingNote() throws InterruptedException {
+		driver.get("http://localhost:" + this.port + "/login");
+		Thread.sleep(2000);
+
+		loginUser("jdoe", "test123!");
+		Thread.sleep(2500);
+
+		// Retrieve the Notes tab and click on it
+		HomePage homePage = new HomePage(driver);
+		driver.findElement(By.id("nav-notes-tab")).click();
+		Thread.sleep(1000);
+
+		// Retrieve the Notes table displaying existing notes
+		driver.findElement(By.id("retrieved-notes-display"));
+		Thread.sleep(2000);
+
+		// Find edit note button and click on it
+		driver.findElement(By.id("edit-note-button")).click();
+		Thread.sleep(2000);
+
+		// Note Modal shows up - Edit Note
+		driver.findElement(By.id("note-title")).sendKeys("I am a an edited note");
+		WebElement note_desc = driver.findElement(By.id("note-description"));
+		note_desc.sendKeys("Edited Note description is blah blah blah");
+		note_desc.submit();
+		Thread.sleep(2000);
+
+		// Check if note was edited
+		assertEquals("retrieved-notes-display", homePage.getRetrievedNotesDisplay());
+		Thread.sleep(2000);
+	}
+
 }

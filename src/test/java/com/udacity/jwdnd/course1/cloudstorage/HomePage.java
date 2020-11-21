@@ -32,6 +32,9 @@ public class HomePage {
     @FindBy(id = "retrieved-notes-display")
     private WebElement retrievedNotesDisplay;
 
+    @FindBy(id = "edit-note-button")
+    private WebElement editNoteButton;
+
     // Constructor
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);

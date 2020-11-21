@@ -95,7 +95,7 @@
                                 <th:block th:each="msg : ${list_of_stored_notes}">
                                     <tr>
                                         <td>
-                                            <button type="button" class="btn btn-success" th:attr="onclick=|showNoteModal('${msg.getNoteId()}', '${msg.getNotetitle()}', '${msg.getNotedescription()}')|">Edit</button>
+                                            <button id="edit-note-button" type="button" class="btn btn-success" th:attr="onclick=|showNoteModal('${msg.getNoteId()}', '${msg.getNotetitle()}', '${msg.getNotedescription()}')|">Edit</button>
                                             <a th:href="|@{/note-delete/{noteId}(noteId=${msg.getNoteId()})}|" class="btn btn-danger" id="${msg.getNoteId()}" >Delete</a>
                                         </td>
                                         <th th:text="${msg.getNotetitle()}" scope="row" class="font-weight-bold" id="note_title">...</th>
