@@ -14,6 +14,24 @@ public class HomePage {
     @FindBy(id = "logoutButton")
     private WebElement logoutButton;
 
+    @FindBy(id = "nav-notes-tab")
+    private WebElement nav_notes_tab;
+
+    @FindBy(id = "addNoteButton")
+    private WebElement addNoteButton;
+
+    @FindBy(id = "noteModal")
+    private WebElement noteModal;
+
+    @FindBy(id = "note-title")
+    private WebElement noteTitle;
+
+    @FindBy(id = "note-description")
+    private WebElement noteDescription;
+
+    @FindBy(id = "retrieved-notes-display")
+    private WebElement retrievedNotesDisplay;
+
     // Constructor
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -25,5 +43,9 @@ public class HomePage {
 
     public void performLogout() {
         logoutButton.click();
+    }
+
+    public String getRetrievedNotesDisplay() {
+        return this.retrievedNotesDisplay.getAttribute("id");
     }
 }
