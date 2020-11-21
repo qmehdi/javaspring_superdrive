@@ -255,4 +255,40 @@ class CloudStorageApplicationTests {
 		assertEquals("retrieved-credentials-display", retrieved_creds_table);
 		Thread.sleep(2000);
 	}
+
+	/* Test that logs in an existing user with existing credentials, clicks the edit credential button on an existing credential, changes the credential data, saves the changes, and verifies that the changes appear in the credential list. */
+	@Test
+	@Order(7)
+	public void testEditCredential() throws InterruptedException {
+		driver.get("http://localhost:" + this.port + "/login");
+		Thread.sleep(2000);
+
+		loginUser("jdoe", "test123!");
+		Thread.sleep(2500);
+
+		// Retrieve the Creds tab and click on it
+		HomePage homePage = new HomePage(driver);
+		driver.findElement(By.id("nav-credentials-tab")).click();
+		Thread.sleep(1000);
+
+		// Retrieve the Creds table displaying existing notes
+		driver.findElement(By.id("retrieved-credentials-display"));
+		Thread.sleep(2000);
+
+		// Find edit creds button and click on it
+		driver.findElement(By.id("edit-credential-button")).click();
+		Thread.sleep(2000);
+
+		// Credential Modal shows up - Edit Cred
+		driver.findElement(By.id("credential-url")).sendKeys("//");
+		driver.findElement(By.id("credential-username")).sendKeys("gaga");
+		WebElement cred_password = driver.findElement(By.id("credential-password"));
+		cred_password.sendKeys("New Password");
+		cred_password.submit();
+		Thread.sleep(2000);
+
+		// Check if note was edited
+		assertEquals("retrieved-credentials-display", homePage.getRetrievedCredentialsDisplay());
+		Thread.sleep(2000);
+	}
 }

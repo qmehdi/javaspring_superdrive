@@ -57,6 +57,9 @@ public class HomePage {
     @FindBy(id = "retrieved-credentials-display")
     private WebElement retrievedCredentialsDisplay;
 
+    @FindBy(id = "edit-credential-button")
+    private WebElement editCredentialButton;
+
 
     // Constructor
     public HomePage(WebDriver driver) {

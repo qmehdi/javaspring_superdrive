@@ -159,7 +159,7 @@
                                 <tr>
                                     <td>
                                         <!-- When user clicks Edit button next to a credential, they should see the decrypted password -->
-                                        <button type="button" class="btn btn-success" th:attr="onclick=|showCredentialModal('${msg.getCredentialId()}', '${msg.getUrl()}', '${msg.getUsername()}', '${encryptionService.decryptValue(msg.password, msg.key)}')|">Edit</button>
+                                        <button id="edit-credential-button" type="button" class="btn btn-success" th:attr="onclick=|showCredentialModal('${msg.getCredentialId()}', '${msg.getUrl()}', '${msg.getUsername()}', '${encryptionService.decryptValue(msg.password, msg.key)}')|">Edit</button>
                                         <a th:href="|@{/credential-delete/{credentialId}(credentialId=${msg.getCredentialId()})}|" class="btn btn-danger">Delete</a>
                                     </td>
                                     <td th:text="${msg.getUrl()}" scope="row">...</td>
