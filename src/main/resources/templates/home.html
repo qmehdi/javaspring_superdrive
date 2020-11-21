@@ -6,13 +6,14 @@
 
         <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}">
 
-        <title>Home</title>
+        <title id="homepageTitle">Home</title>
+
     </head>
     <body class="p-3 mb-2 bg-light text-black">
         <div class="container">
             <div id="logoutDiv">
                 <form action="#" th:action="@{/logout}" method="POST">
-                    <button type="submit" class="btn btn-secondary float-right" onclick="localStorage.setItem('activeTab', '#nav-files');">Logout</button>
+                    <button id="logoutButton" type="submit" class="btn btn-secondary float-right" onclick="localStorage.setItem('activeTab', '#nav-files');">Logout</button>
                 </form>
             </div>
             <div id="contentDiv" style="clear: right;">
@@ -77,7 +78,7 @@
                     </div>
                     <!--  @@@@@@@@@@ START OF NOTES DIV @@@@@@@@@@ -->
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
+                        <button id="addNoteButton" style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
                         <div class="table-responsive">
@@ -89,11 +90,11 @@
                                         <th style="width: 60%" scope="col">Description</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="retrieved-notes-display">
                                 <th:block th:each="msg : ${list_of_stored_notes}">
                                     <tr>
                                         <td>
-                                            <button type="button" class="btn btn-success" th:attr="onclick=|showNoteModal('${msg.getNoteId()}', '${msg.getNotetitle()}', '${msg.getNotedescription()}')|">Edit</button>
+                                            <button id="edit-note-button" type="button" class="btn btn-success" th:attr="onclick=|showNoteModal('${msg.getNoteId()}', '${msg.getNotetitle()}', '${msg.getNotedescription()}')|">Edit</button>
                                             <a th:href="|@{/note-delete/{noteId}(noteId=${msg.getNoteId()})}|" class="btn btn-danger" id="${msg.getNoteId()}" >Delete</a>
                                         </td>
                                         <th th:text="${msg.getNotetitle()}" scope="row" class="font-weight-bold" id="note_title">...</th>
