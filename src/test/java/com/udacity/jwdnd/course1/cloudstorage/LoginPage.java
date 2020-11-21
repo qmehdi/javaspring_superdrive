@@ -16,6 +16,9 @@ public class LoginPage {
     @FindBy(id = "submitButton")
     private WebElement submitButton;
 
+    @FindBy(id = "loginPage")
+    private WebElement pageTitle;
+
     // Constructor
     public LoginPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -25,5 +28,9 @@ public class LoginPage {
         this.inputUsername.sendKeys(username);
         this.inputPassword.sendKeys(password);
         this.submitButton.click();
+    }
+
+    public String getPageTitle() {
+        return this.pageTitle.getAttribute("id");
     }
 }

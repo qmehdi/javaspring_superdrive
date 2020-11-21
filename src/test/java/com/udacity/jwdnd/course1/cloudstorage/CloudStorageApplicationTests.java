@@ -34,6 +34,7 @@ class CloudStorageApplicationTests {
 		}
 	}
 
+	/* Test that signs up a new user, logs that user in, verifies that they can access the home page, then logs out and verifies that the home page is no longer accessible */
 	@Test
 	public void testUserSignupAndLogin() throws InterruptedException{
 		String _firstName = "John";
@@ -43,23 +44,38 @@ class CloudStorageApplicationTests {
 
 		driver.get("http://localhost:" + this.port + "/signup");
 
-		// ########### Sign Up ############
+		// ##########################################
+		// ################ Sign Up #################
+		// ##########################################
 		SignUpPage signUpPage = new SignUpPage(driver);
-
 		signUpPage.performSignUp(_firstName, _lastName, _username, _password);
+		Thread.sleep(1500);
 
-		Thread.sleep(1000);
-
-		// ########### Login ##############
+		// ##########################################
+		// ################ Login ###################
+		// ##########################################
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.performLogin(_username, _password);
+		Thread.sleep(1500);
 
-		Thread.sleep(1000);
-
-		// ########### ASSERT ##############
+		// ###########################################
+		// ################# Logout ##################
+		// ###########################################
 		HomePage homePage = new HomePage(driver);
-		String home_page_title = homePage.getPageTitle();
+		homePage.performLogout();
 
-		assertEquals("homepageTitle", home_page_title);
+		/* Home page should no longer be visible
+		Hitting /home should redirect to /login */
+		driver.get("http://localhost:" + this.port + "/home");
+		Thread.sleep(1500);
+
+		LoginPage loginPageAfterLogout = new LoginPage(driver);
+		String page_title_after_logout = loginPageAfterLogout.getPageTitle();
+
+		// ##########################################
+		// ########## ASSERT HOME PAGE ##############
+		// ##########################################
+		assertEquals("loginPage", page_title_after_logout);
+		Thread.sleep(1500);
 	}
 }

@@ -11,6 +11,9 @@ public class HomePage {
     @FindBy(id = "homepageTitle")
     private WebElement pageTitle;
 
+    @FindBy(id = "logoutButton")
+    private WebElement logoutButton;
+
     // Constructor
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -18,5 +21,9 @@ public class HomePage {
 
     public String getPageTitle() {
         return this.pageTitle.getAttribute("id");
+    }
+
+    public void performLogout() {
+        logoutButton.click();
     }
 }
