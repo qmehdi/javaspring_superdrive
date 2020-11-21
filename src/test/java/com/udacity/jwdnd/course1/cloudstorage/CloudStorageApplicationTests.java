@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 
+import javax.swing.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,35 +36,51 @@ class CloudStorageApplicationTests {
 		}
 	}
 
-	/* Test that signs up a new user, logs that user in, verifies that they can access the home page, then logs out and verifies that the home page is no longer accessible */
-	@Test
-	public void testUserSignupAndLogin() throws InterruptedException{
-		String _firstName = "John";
-		String _lastName = "Doe";
-		String _username = "jdoe";
-		String _password = "test123!";
+	// ##########################################
+	// ################ Sign Up #################
+	// ##########################################
+	public void signUpUser(String firstName, String lastName, String username, String password) {
+		String _firstName = firstName;
+		String _lastName = lastName;
+		String _username = username;
+		String _password = password;
 
 		driver.get("http://localhost:" + this.port + "/signup");
 
-		// ##########################################
-		// ################ Sign Up #################
-		// ##########################################
 		SignUpPage signUpPage = new SignUpPage(driver);
 		signUpPage.performSignUp(_firstName, _lastName, _username, _password);
-		Thread.sleep(1500);
+	}
 
-		// ##########################################
-		// ################ Login ###################
-		// ##########################################
+	// ##########################################
+	// ################ Login ###################
+	// ##########################################
+	public void loginUser(String username, String password) {
+		String __username = username;
+		String __password = password;
 		LoginPage loginPage = new LoginPage(driver);
-		loginPage.performLogin(_username, _password);
-		Thread.sleep(1500);
+		loginPage.performLogin(__username, __password);
+	}
 
-		// ###########################################
-		// ################# Logout ##################
-		// ###########################################
+	// ###########################################
+	// ################# Logout ##################
+	// ###########################################
+	public void logoutUser() {
 		HomePage homePage = new HomePage(driver);
 		homePage.performLogout();
+	}
+
+	/* Test that signs up a new user, logs that user in, verifies that they can access the home page, then logs out and verifies that the home page is no longer accessible */
+	@Test
+	public void testUserSignupAndLogin() throws InterruptedException{
+
+		signUpUser("john", "doe", "jdoe", "test123!");
+		Thread.sleep(1500);
+
+		loginUser("jdoe", "test123!");
+		Thread.sleep(1500);
+
+		logoutUser();
+		Thread.sleep(1500);
 
 		/* Home page should no longer be visible
 		Hitting /home should redirect to /login */
