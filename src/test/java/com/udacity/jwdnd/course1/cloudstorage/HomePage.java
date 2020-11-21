@@ -38,6 +38,29 @@ public class HomePage {
     @FindBy(className = "btn-danger")
     private WebElement deleteNoteButton;
 
+    // ######## Credentials Tab ##########
+    @FindBy(id = "nav-credentials-tab")
+    private WebElement navCredentialsTab;
+
+    @FindBy(id = "add-credential-button")
+    private WebElement addCredentialButton;
+
+    @FindBy(id = "credential-url")
+    private WebElement credentialUrl;
+
+    @FindBy(id = "credential-username")
+    private WebElement credentialUsername;
+
+    @FindBy(id = "credential-password")
+    private WebElement credentialPassword;
+
+    @FindBy(id = "retrieved-credentials-display")
+    private WebElement retrievedCredentialsDisplay;
+
+    @FindBy(id = "edit-credential-button")
+    private WebElement editCredentialButton;
+
+
     // Constructor
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -53,5 +76,9 @@ public class HomePage {
 
     public String getRetrievedNotesDisplay() {
         return this.retrievedNotesDisplay.getAttribute("id");
+    }
+
+    public String getRetrievedCredentialsDisplay() {
+        return this.retrievedCredentialsDisplay.getAttribute("id");
     }
 }
