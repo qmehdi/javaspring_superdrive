@@ -217,4 +217,42 @@ class CloudStorageApplicationTests {
 		assertNotEquals("retrieved-notes-display", driver.findElement(By.id("retrieved-notes-display")).getText());
 		Thread.sleep(2000);
 	}
+
+	/* Test that logs in an existing user, creates a credential and verifies that the credential details are visible in the credential list. */
+	@Test
+	@Order(6)
+	public void testCreateCredential() throws InterruptedException {
+		driver.get("http://localhost:" + this.port + "/signup");
+		Thread.sleep(2000);
+
+		// Signup and Login user
+		signUpUser("jdoe", "jdoe", "jdoe", "test123!");
+		Thread.sleep(2000);
+		loginUser("jdoe", "test123!");
+		Thread.sleep(2500);
+
+		// Retrieve the Credentials tab and click on it
+		HomePage homePage = new HomePage(driver);
+		Thread.sleep(2000);
+		driver.findElement(By.id("nav-credentials-tab")).click();
+		Thread.sleep(1000);
+
+		// Retrieve the "Add a New Credential" Button and click on it
+		driver.findElement(By.id("add-credential-button")).click();
+		Thread.sleep(2500);
+
+		// Credential Modal shows up - Fill it out
+		driver.findElement(By.id("credential-url")).sendKeys("http://www.google.com");
+		driver.findElement(By.id("credential-username")).sendKeys("juju");
+		WebElement cred_password = driver.findElement(By.id("credential-password"));
+		cred_password.sendKeys("zzzXXXXttttt");
+		cred_password.submit();
+		Thread.sleep(2000);
+
+		// Table showing retrieved credentials
+		String retrieved_creds_table = homePage.getRetrievedCredentialsDisplay();
+
+		assertEquals("retrieved-credentials-display", retrieved_creds_table);
+		Thread.sleep(2000);
+	}
 }
