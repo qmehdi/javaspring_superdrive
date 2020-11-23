@@ -81,6 +81,15 @@
                         <button id="addNoteButton" style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
+                        <div id="notes-create-msg" th:if="${noteCreateSuccess}" class="alert alert-success">
+                            <div th:text="${noteCreateSuccess}"></div>
+                        </div>
+                        <div id="notes-edit-msg" th:if="${noteEditSuccess}" class="alert alert-success">
+                            <div th:text="${noteEditSuccess}"></div>
+                        </div>
+                        <div id="notes-delete-msg" th:if="${noteDeleteSuccess}" class="alert alert-success">
+                            <div th:text="${noteDeleteSuccess}"></div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped" id="userTable">
                                 <thead>
