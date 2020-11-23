@@ -42,7 +42,7 @@ public class NoteUploadController {
     }
 
     @PostMapping("/note-upload")
-    public String handleNoteUpload(@ModelAttribute("newNotemsg") NoteForm noteForm, Model model) {
+    public String handleNoteUpload(@ModelAttribute("newNotemsg") NoteForm noteForm, Model model, HttpServletRequest request) {
 
         // Get current time
         String uploadedtime = Instant.now().toString();
@@ -63,10 +63,12 @@ public class NoteUploadController {
             // Notice that we are not sending in the constructed userSubmittedNote into the update function because we need to preserve the original noteId
             // Instead we are sending in the submitted noteForm object.
             noteStorageService.updateNoteInDB(userSubmittedNote);
+            request.setAttribute("noteEditSuccess", "Note Edited Successfully!");
         } else {
 
             // Invoke Insert method
             noteStorageService.insertNoteIntoDB(userSubmittedNote);
+            request.setAttribute("noteCreateSuccess", "Note Created Successfully!");
         }
 
         // Display in html
@@ -76,9 +78,11 @@ public class NoteUploadController {
     }
 
     @RequestMapping(value = "/note-delete/{noteId}", method = RequestMethod.GET)
-    public String deleteNote(@PathVariable Integer noteId) {
+    public String deleteNote(@PathVariable Integer noteId, HttpServletRequest request) {
 
         noteStorageService.deleteNoteFromDB(noteId, getLoggedInUserObject().getUserId());
+
+        request.setAttribute("noteDeleteSuccess", "Note Deleted Successfully!");
 
         return "forward:/home";
     }

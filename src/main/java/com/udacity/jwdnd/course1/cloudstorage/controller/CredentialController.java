@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -43,7 +44,7 @@ public class CredentialController {
     }
 
     @PostMapping("/credential-create")
-    public String createCredential(@ModelAttribute("newCredentialmsg") Credential credentialForm, Model model) {
+    public String createCredential(@ModelAttribute("newCredentialmsg") Credential credentialForm, Model model, HttpServletRequest request) {
 
         // Encrypt the password
         // It is being executed for both Insert and update
@@ -60,23 +61,27 @@ public class CredentialController {
         if (credentialForm.getCredentialId() != null) {
 
             userSubmittedCredential.setCredentialId(credentialForm.getCredentialId());
+
             // Invoke Update method
             // Notice that we are not sending in the constructed userSubmittedCredential into the update function because we need to preserve the original credentialId
             // Instead we are sending in the submitted credentialForm object.
             credentialService.updateCredentialInDB(userSubmittedCredential);
+            request.setAttribute("credEditSuccess", "Credential Edited Successfully!");
         } else {
 
             // Invoke Insert method
             credentialService.insertCredentialIntoDB(userSubmittedCredential);
+            request.setAttribute("credCreateSuccess", "Credential Created Successfully!");
         }
 
         return "forward:/home";
     }
 
     @RequestMapping(value = "/credential-delete/{credentialId}", method = { RequestMethod.GET })
-    public String deleteCredential(@PathVariable Integer credentialId) {
+    public String deleteCredential(@PathVariable Integer credentialId, HttpServletRequest request) {
 
         credentialService.deleteCredential(credentialId, getLoggedInUserObject().getUserId());
+        request.setAttribute("credDeleteSuccess", "Credential Deleted Successfully!");
         return "forward:/home";
     }
 

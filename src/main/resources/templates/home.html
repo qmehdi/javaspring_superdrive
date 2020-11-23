@@ -42,8 +42,14 @@
                             </div>
                         </form>
                         <!--  Display the file uploaded successfully or failed message  -->
+                        <div id="file-size-exceeded" th:if="${fileSizeExceededE}" class="alert alert-danger">
+                            <div th:text="${fileSizeExceededE}"></div>
+                        </div>
                         <div id="success-msg" th:if="${fileUploadSuccess}" class="alert alert-success">
                             <div th:text="${fileUploadSuccess}"></div>
+                        </div>
+                        <div id="file-delete-success" th:if="${fileDeleteSuccess}" class="alert alert-success">
+                            <div th:text="${fileDeleteSuccess}"></div>
                         </div>
                         <div id="failure-msg" th:if="${fileUploadFailure}" class="alert alert-warning">
                             <div th:text="${fileUploadFailure}"></div>
@@ -81,6 +87,15 @@
                         <button id="addNoteButton" style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
+                        <div id="notes-create-msg" th:if="${noteCreateSuccess}" class="alert alert-success">
+                            <div th:text="${noteCreateSuccess}"></div>
+                        </div>
+                        <div id="notes-edit-msg" th:if="${noteEditSuccess}" class="alert alert-success">
+                            <div th:text="${noteEditSuccess}"></div>
+                        </div>
+                        <div id="notes-delete-msg" th:if="${noteDeleteSuccess}" class="alert alert-success">
+                            <div th:text="${noteDeleteSuccess}"></div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped" id="userTable">
                                 <thead>
@@ -143,6 +158,15 @@
                             + Add a New Credential
                         </button>
 
+                        <div id="cred-create-msg" th:if="${credCreateSuccess}" class="alert alert-success">
+                            <div th:text="${credCreateSuccess}"></div>
+                        </div>
+                        <div id="cred-edit-msg" th:if="${credEditSuccess}" class="alert alert-success">
+                            <div th:text="${credEditSuccess}"></div>
+                        </div>
+                        <div id="cred-delete-msg" th:if="${credDeleteSuccess}" class="alert alert-success">
+                            <div th:text="${credDeleteSuccess}"></div>
+                        </div>
                         <!--  Display all credentials that were retrieved by the DB for the logged-in user -->
                         <div class="table-responsive">
                             <table class="table table-striped" th:object="${credentials}" id="credentialTable">
