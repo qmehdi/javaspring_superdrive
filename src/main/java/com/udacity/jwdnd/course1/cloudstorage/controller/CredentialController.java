@@ -61,6 +61,7 @@ public class CredentialController {
         if (credentialForm.getCredentialId() != null) {
 
             userSubmittedCredential.setCredentialId(credentialForm.getCredentialId());
+
             // Invoke Update method
             // Notice that we are not sending in the constructed userSubmittedCredential into the update function because we need to preserve the original credentialId
             // Instead we are sending in the submitted credentialForm object.
