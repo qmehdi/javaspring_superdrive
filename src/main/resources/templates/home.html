@@ -152,6 +152,15 @@
                             + Add a New Credential
                         </button>
 
+                        <div id="cred-create-msg" th:if="${credCreateSuccess}" class="alert alert-success">
+                            <div th:text="${credCreateSuccess}"></div>
+                        </div>
+                        <div id="cred-edit-msg" th:if="${credEditSuccess}" class="alert alert-success">
+                            <div th:text="${credEditSuccess}"></div>
+                        </div>
+                        <div id="cred-delete-msg" th:if="${credDeleteSuccess}" class="alert alert-success">
+                            <div th:text="${credDeleteSuccess}"></div>
+                        </div>
                         <!--  Display all credentials that were retrieved by the DB for the logged-in user -->
                         <div class="table-responsive">
                             <table class="table table-striped" th:object="${credentials}" id="credentialTable">
