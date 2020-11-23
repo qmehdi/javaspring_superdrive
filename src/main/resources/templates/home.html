@@ -42,6 +42,9 @@
                             </div>
                         </form>
                         <!--  Display the file uploaded successfully or failed message  -->
+                        <div id="file-size-exceeded" th:if="${fileSizeExceededE}" class="alert alert-danger">
+                            <div th:text="${fileSizeExceededE}"></div>
+                        </div>
                         <div id="success-msg" th:if="${fileUploadSuccess}" class="alert alert-success">
                             <div th:text="${fileUploadSuccess}"></div>
                         </div>
