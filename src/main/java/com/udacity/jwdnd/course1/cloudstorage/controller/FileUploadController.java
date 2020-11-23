@@ -72,9 +72,11 @@ public class FileUploadController {
     }
 
     @RequestMapping(value = "/file-delete/{fileid}", method = RequestMethod.GET)
-    public String deleteFile(@PathVariable Integer fileid) {
+    public String deleteFile(@PathVariable Integer fileid, HttpServletRequest request) {
 
         storageService.deleteFileFromDB(fileid, getLoggedInUserObject().getUserId());
+
+        request.setAttribute("fileDeleteSuccess", "File Deleted Successfully!");
 
         return "forward:/home";
     }

@@ -48,6 +48,9 @@
                         <div id="success-msg" th:if="${fileUploadSuccess}" class="alert alert-success">
                             <div th:text="${fileUploadSuccess}"></div>
                         </div>
+                        <div id="file-delete-success" th:if="${fileDeleteSuccess}" class="alert alert-success">
+                            <div th:text="${fileDeleteSuccess}"></div>
+                        </div>
                         <div id="failure-msg" th:if="${fileUploadFailure}" class="alert alert-warning">
                             <div th:text="${fileUploadFailure}"></div>
                         </div>
