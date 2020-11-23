@@ -105,4 +105,12 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>internal.repo</id>
+            <name>Internal repo</name>
+            <url>file:///Users/qmehdi/repos/jwdnd_superduperdrive</url>
+        </repository>
+    </distributionManagement>
+
 </project>
